@@ -16,6 +16,12 @@ public class Plate : MonoBehaviour
         this._direction = direction;
     }
     
+    public void ResetPosition()
+    {
+        _rb.velocity = Vector2.zero;
+        _rb.position = new Vector2(_rb.position.x, 0f);
+    }
+    
     private void FixedUpdate()
     {
         if (_direction.sqrMagnitude != 0) 
