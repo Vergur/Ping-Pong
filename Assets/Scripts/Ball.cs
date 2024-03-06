@@ -4,6 +4,7 @@ public class Ball : MonoBehaviour
 {
     private Rigidbody _rb;
     public float DefaultSpeed = 5f;
+    private float _currentSpeed = 5f;
 
     private void Awake()
     {
@@ -14,7 +15,7 @@ public class Ball : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 direction = _rb.velocity.normalized;
-        _rb.velocity = direction * DefaultSpeed;
+        _rb.velocity = direction * _currentSpeed;
     }
 
     private void AddStartImpulse()
@@ -23,6 +24,17 @@ public class Ball : MonoBehaviour
         float y = 0.1f;
         
         Vector2 direction = new Vector2(x, y).normalized;
-        _rb.AddForce(direction * DefaultSpeed, ForceMode.Impulse);
+        _currentSpeed = DefaultSpeed;
+        _rb.AddForce(direction * _currentSpeed, ForceMode.Impulse);
+    }
+    
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.GetComponent("Plate")) return;
+        
+        Vector3 normal = collision.contacts[0].normal;
+        Vector3 reflectedVelocity = Vector3.Reflect(_rb.velocity, normal);
+        _rb.velocity = reflectedVelocity;
+        _currentSpeed += 0.5f;
     }
 }

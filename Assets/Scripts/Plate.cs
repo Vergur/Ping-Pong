@@ -2,22 +2,25 @@ using UnityEngine;
 
 public class Plate : MonoBehaviour
 {
+    protected float _defaultSpeed = 70;
     protected Rigidbody _rb;
-    public float DefaultSpeed = 5f;
-    
+    private Vector2 _direction;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
 
-    public void OnCollisionEnter(Collision collision)
+    public void ChangePlateDirection(Vector2 direction)
     {
-        if (!collision.gameObject.GetComponent("Ball")) return;
-        
-        Rigidbody ball = collision.rigidbody;
-        Vector3 normal = collision.contacts[0].normal;
-        Vector3 reflectedVelocity = Vector3.Reflect(collision.relativeVelocity, normal);
-        ball.velocity = reflectedVelocity * DefaultSpeed;
-        
+        this._direction = direction;
+    }
+    
+    private void FixedUpdate()
+    {
+        if (_direction.sqrMagnitude != 0) 
+        { 
+            _rb.AddForce(_direction * _defaultSpeed);
+        }
     }
 }

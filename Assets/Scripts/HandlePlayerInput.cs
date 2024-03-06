@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HandlePlayerInput : MonoBehaviour
 {
-    [SerializeField] private PlateController _playerPlate;
+    [SerializeField] private Plate _playerPlate;
     private Vector2 _direction;
     private PlayerInput _input;
     private enum Direction { Up, Down }
@@ -29,7 +29,6 @@ public class HandlePlayerInput : MonoBehaviour
         };
         
         _playerPlate.ChangePlateDirection(_direction);
-        Debug.Log($"Move {direction}");
     }
     
     private void Release()
