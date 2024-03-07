@@ -6,6 +6,7 @@ public class HandlePlayerInput : MonoBehaviour
     private Vector2 _direction;
     private PlayerInput _input;
     private enum Direction { Up, Down }
+    
     private void Start()
     {
         _input = new PlayerInput();

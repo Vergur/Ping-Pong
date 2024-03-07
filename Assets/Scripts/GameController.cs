@@ -32,8 +32,8 @@ public class GameController : MonoBehaviour
 
     private void StartGame()
     {
-        SetPlayerScore(0);
-        SetEnemyScore(0);
+        SetPlayerScore(0, _playerScoreText);
+        SetPlayerScore(0, _enemyScoreText);
         StartRound();
     }
 
@@ -47,20 +47,13 @@ public class GameController : MonoBehaviour
 
     private void OnScored(PlayerType playerType)
     {
-        SetPlayerScore(playerType == 0 ? _playerScore : _enemyScore + 1);
+        SetPlayerScore(playerType == PlayerType.Gamer ? ++_playerScore : ++_enemyScore, playerType == PlayerType.Gamer ? _playerScoreText : _enemyScoreText);
         StartRound();
     }
     
-    private void SetPlayerScore(int score)
+    private void SetPlayerScore(int score, TextMeshProUGUI playerScoreText)
     {
-        _playerScore = score;
-        _playerScoreText.SetText(score.ToString());
-    }
-
-    private void SetEnemyScore(int score)
-    {
-        _enemyScore = score;
-        _enemyScoreText.SetText(score.ToString());
+        playerScoreText.SetText(score.ToString());
     }
     
     private void OnDestroy()
