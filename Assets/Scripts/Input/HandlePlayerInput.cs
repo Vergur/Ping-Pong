@@ -3,10 +3,11 @@ using UnityEngine;
 public class HandlePlayerInput : MonoBehaviour
 {
     [SerializeField] private Plate _playerPlate;
+    [SerializeField] private MenuController _menuController;
     private Vector2 _direction;
     private PlayerInput _input;
     private enum Direction { Up, Down }
-    
+
     private void Start()
     {
         _input = new PlayerInput();
@@ -16,6 +17,8 @@ public class HandlePlayerInput : MonoBehaviour
         _input.Player.MoveUp.canceled += ctx => Release();
         _input.Player.MoveDown.started += ctx => Move(Direction.Down);
         _input.Player.MoveDown.canceled += ctx => Release();
+        
+        _input.Player.Menu.started += ctx => OpenMenu();
     }
 
     private void Move(Direction direction)
@@ -34,5 +37,11 @@ public class HandlePlayerInput : MonoBehaviour
     {
         _direction = Vector2.zero;
         _playerPlate.ChangePlateDirection(_direction);
+    }
+
+    private void OpenMenu()
+    {
+        _menuController.ChangeVisibility(true);
+        Time.timeScale = 0;
     }
 }

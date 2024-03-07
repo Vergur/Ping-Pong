@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
         StartGame();
     }
 
-    private void StartGame()
+    public void StartGame()
     {
         SetPlayerScore(0);
         SetEnemyScore(0);
