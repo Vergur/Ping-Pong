@@ -32,7 +32,7 @@ public class MenuController : MonoBehaviour
     public void RestartGame()
     {
         ChangeVisibility(false);
-        _gameController.StartGame();
+        _gameController.RestartGame();
         Time.timeScale = 1;
     }
 

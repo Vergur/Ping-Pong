@@ -32,12 +32,18 @@ public class GameController : MonoBehaviour
         StartGame();
     }
 
-    public void StartGame()
+    private void StartGame()
     {
         SetPlayerScore(0);
         SetEnemyScore(0);
         StartRound();
         GetBestScore();
+    }
+
+    public void RestartGame()
+    {
+        _ball.ResetBallSpeed();
+        StartGame();
     }
 
     private void StartRound()
@@ -53,12 +59,14 @@ public class GameController : MonoBehaviour
         if (playerType == PlayerType.Enemy)
         {
             SetPlayerScore(++_playerScore);
+            _ball.IncreaseBallSpeed(0.5f);
             _currentScoreText.SetText($"Scorestreak:{++_currentScoreStreak}");
             if (_currentScoreStreak > _bestScore) SaveBestScore(_currentScoreStreak);
         }
         else
         {
             SetEnemyScore(++_enemyScore);
+            _ball.ResetBallSpeed();
         }
 
         StartRound();

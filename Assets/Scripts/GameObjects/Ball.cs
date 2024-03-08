@@ -5,6 +5,7 @@ public class Ball : MonoBehaviour
     private Rigidbody _rb;
     public float DefaultSpeed = 7f;
     private float _currentSpeed = 0f;
+    private float _maxSpeed = 18f;
 
     private void Awake()
     {
@@ -20,6 +21,16 @@ public class Ball : MonoBehaviour
     public void ResetPosition()
     {
         _rb.position = _rb.velocity = Vector2.zero;
+    }
+
+    public void IncreaseBallSpeed(float newSpeed)
+    {
+        _currentSpeed = _currentSpeed < _maxSpeed ? _currentSpeed + newSpeed : _maxSpeed;
+    }
+    
+    public void ResetBallSpeed()
+    {
+        _currentSpeed = DefaultSpeed;
     }
 
     public void AddStartImpulse()
@@ -39,8 +50,5 @@ public class Ball : MonoBehaviour
         Vector3 normalVector = collision.contacts[0].normal;
         Vector3 reflectedVelocity = Vector3.Reflect(_rb.velocity, normalVector);
         _rb.velocity = reflectedVelocity;
-        
-        if (!collision.gameObject.GetComponent("Plate")) return;
-        _currentSpeed += 0.5f;
     }
 }
