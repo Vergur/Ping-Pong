@@ -41,6 +41,8 @@ public class HandlePlayerInput : MonoBehaviour
 
     private void OpenMenu()
     {
+        if (Time.timeScale == 0) return;
+        
         _menuController.ChangeVisibility(true);
         Time.timeScale = 0;
     }

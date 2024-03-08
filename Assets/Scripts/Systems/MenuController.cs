@@ -11,14 +11,14 @@ public class MenuController : MonoBehaviour
 
     public void ContinueGame()
     {
-        Debug.Log("Continue");
+        _counter.transform.localScale = new Vector3(1, 1, 1);
         StartCoroutine(StartTimer());
     }
 
     private IEnumerator StartTimer()
     {
         ChangeVisibility(false);
-        for (int i = 3; i >= 0; i--)
+        for (int i = 3; i > 0; i--)
         {
             _counter.SetText(i.ToString());
             yield return new WaitForSecondsRealtime(0.5f);
@@ -31,8 +31,9 @@ public class MenuController : MonoBehaviour
     
     public void RestartGame()
     {
-        Time.timeScale = 1;
+        ChangeVisibility(false);
         _gameController.StartGame();
+        Time.timeScale = 1;
     }
 
     public void ExitGame()
